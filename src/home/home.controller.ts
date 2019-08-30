@@ -10,7 +10,6 @@ export const workdir ='/home/'
 //export const workdir ='/media'
 @Controller(path.basename(workdir))
 export class HomeController {
-//fuck you
     
     constructor(private  homeservice :HomeService){}
     //  http://127.0.0.1:3000/home/Native.mp4=play
