@@ -5,13 +5,12 @@ import { Response } from 'express';
 import { Extension, isvideo,visitor, clearvideofile, isphoto, issound } from 'src/color/json'; //引用了兩個函式  
 const path =require('path')
 
-// git test
 export const workdir ='/home/'
 //export const workdir='./src/home/'
 //export const workdir ='/media'
 @Controller(path.basename(workdir))
 export class HomeController {
-
+//fuck you
     
     constructor(private  homeservice :HomeService){}
     //  http://127.0.0.1:3000/home/Native.mp4=play
