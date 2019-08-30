@@ -160,13 +160,14 @@ let photofile =[]
 let soundfile =[]
    
 
-export async function visitor(node,mod) {
+export async function visitor(node,mod) { //拜訪目標路徑底下的各個資料夾 找出 mod要求提供的檔案類型
 
-    var files = fs.readdirSync(node);
+
+    var files = fs.readdirSync(node); 
     files.forEach(function (filename) {
       var childnode = path.join(node,filename);
       var stats = fs.statSync(childnode);
-      if (stats.isDirectory()) 
+      if (stats.isDirectory())  //如果是子目錄 繼續拜訪
       {
           visitor(childnode,mod)
       }
@@ -201,9 +202,9 @@ export function clearvideofile()
 }
 
 
-export function translatepath(node)
+export function translatepath(node)//將路徑從絕對路徑改成由workdir底下的相對路徑
 {
-    
+    console.log(node)
     node = node.replace(path.join(workdir,''),'')
     node = path.join(path.basename(workdir),node)
 

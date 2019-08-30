@@ -5,7 +5,7 @@ import { Response } from 'express';
 import { Extension, isvideo,visitor, clearvideofile, isphoto, issound } from 'src/color/json'; //引用了兩個函式  
 const path =require('path')
 
-
+// git test
 export const workdir ='/home/'
 //export const workdir='./src/home/'
 //export const workdir ='/media'
@@ -40,7 +40,7 @@ export class HomeController {
     /*
         getvideo -----> mod == 1
         getphoto -----> mod == 2
-        getsound ---->  mod == 3
+        getsound -----> mod == 3
      */ 
     @Get('*=get:mod')
     @Header("Content-Type","application/json")
