@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import {HomeService} from '../home/home.service'
 import {workdir} from '../home/home.controller'
+const mediainfo = require('node-mediainfo');
 
 const path =require('path')
 
@@ -28,7 +29,7 @@ e.g:
 
 
 
-export function json(file,filepath) //path 為目標目錄的路徑
+ export async function json(file,filepath) //path 為目標目錄的路徑
 {                               //file為此目錄下 所有的子目錄與檔案 readirs會以 String[] 的形式傳送
 
 
@@ -39,6 +40,7 @@ export function json(file,filepath) //path 為目標目錄的路徑
     //變數  output 存等等要回傳的json目標目錄資訊
     let output ='{'         
     let stats = fs.statSync(filepath)  // fs.stats的同步版 回傳fs.stats
+   
                                   //參數為目標目錄/檔案的 路徑
     var is_dir=stats.isDirectory() //判定此是否為資料夾
     let filesize =stats.size //讀取目錄的大小,不過目錄"本身"的大小似乎都相同   皆為4096 Bytes
@@ -58,6 +60,30 @@ export function json(file,filepath) //path 為目標目錄的路徑
     output +='\n    "Size" : "' +filesize + '",' //檔案/目錄大小
     output +='\n    "Path" : "' +filepath + '",' //檔案/目錄 路徑
     
+
+
+
+
+    if(isvideo(filepath))
+    {
+
+        const result = await mediainfo('/home/coder01/work/src/home/Native.mp4');
+
+        output += '\n"Format" :  "'+result.media.track[0].Format+ '",'
+        output += '\n"Duration:" :  "'+secondsToHms(result.media.track[0].Duration)+ '",'
+
+
+
+    }
+
+
+
+
+
+
+
+
+
     output += '\n   "Children" : [' //將目錄下的 檔案與子目錄 加入output中
 
     
@@ -209,4 +235,16 @@ export function translatepath(node)//將路徑從絕對路徑改成由workdir底
     node = path.join(path.basename(workdir),node)
 
     return '/'+node
+}
+
+export function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    return hDisplay + mDisplay + sDisplay; 
 }
