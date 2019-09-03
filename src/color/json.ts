@@ -67,7 +67,7 @@ e.g:
     if(isvideo(filepath))
     {
 
-        const result = await mediainfo('/home/coder01/work/src/home/Native.mp4');
+        const result = await mediainfo(filepath);
 
         output += '\n"Format" :  "'+result.media.track[0].Format+ '",'
         output += '\n"Duration:" :  "'+secondsToHms(result.media.track[0].Duration)+ '",'
